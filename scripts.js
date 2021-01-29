@@ -170,7 +170,7 @@ class Partida {
     
     juegaPc() {
         this.repartirPC()
-        if (this.puntajePC < 17 && this.PCtieneAs ) {
+        if (this.puntajePC < 17) {
             return this.juegaPc()
         }
         this.controlarResultadoPC()
