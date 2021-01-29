@@ -62,28 +62,30 @@ class Partida {
         this.mazo = ['As-c','_2-c','_3-c','_4-c','_5-c','_6-c','_7-c','_8-c','_9-c','_10-c','J-c','Q-c','K-c','As-d','_2-d','_3-d','_4-d','_5-d','_6-d','_7-d','_8-d','_9-d','_10-d','J-d','Q-d','K-d','As-p','_2-p','_3-p','_4-p','_5-p','_6-p','_7-p','_8-p','_9-p','_10-p','J-p','Q-p','K-p','As-t','_2-t','_3-t','_4-t','_5-t','_6-t','_7-t','_8-t','_9-t','_10-t','J-t','Q-t','K-t',]
     }
 
-    reiniciarValores(){
+    reiniciarValores(empate){
+        if(!empate) {
+            this.valorApuesta = 0
+            dineroApostado.textContent = ''
+        }
         this.ocultarCartas()
         this.reiniciarMazo()
         dineroApostadoCont.style.display = 'none' 
         anuncioCont.style.display = 'none'
         anuncio.textContent = ''
-        dineroApostado.textContent = ''
         this.manoJugador = []
         this.puntajeJugador = 0
         this.manoPC = []
         this.puntajePC = 0
-        this.valorApuesta = 0
         nuevaManoBtn.removeEventListener('click', this.comenzarMano)
         nuevaManoBtn.style.display = 'none'
     }
 
-    comenzarMano() {
-        this.reiniciarValores()
+    comenzarMano(empate) {
+        this.reiniciarValores(empate)
         this.apuesta()
             .then(response => {
-                dineroApostado.textContent = response
-                this.valorApuesta = response
+                dineroApostado.textContent = Number(dineroApostado.textContent) + response
+                this.valorApuesta += response
                 return response
             })
             .then(response => {
@@ -169,7 +171,7 @@ class Partida {
     juegaPc() {
         this.repartirPC()
         if (this.puntajePC < 17 && this.PCtieneAs ) {
-            this.juegaPc()
+            return this.juegaPc()
         }
         this.controlarResultadoPC()
     }
@@ -265,7 +267,7 @@ class Partida {
     }
 
     empate() {
-        this.finalizarMano()
+        this.finalizarMano(true)
     }
     
     ocultarCartas() {
@@ -280,12 +282,12 @@ class Partida {
         return
     }
 
-    finalizarMano() {
+    finalizarMano(empate = false) {
         botonesEleccion.style.display = 'none'
         anuncioCont.style.display = 'flex'
         this.comenzarMano = this.comenzarMano.bind(this)
         nuevaManoBtn.style.display = 'flex'
-        nuevaManoBtn.addEventListener('click', this.comenzarMano)
+        nuevaManoBtn.addEventListener('click', () => this.comenzarMano(empate))
     }
 
     pasarCartasAPuntos1(mano) {
