@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <title>Weahter App</title>
+</head>
+<body>
+    <main>
+        <p class="main-text">Esta es una página desarrollada a modo de práctica, que utiliza la API de <a href="https://www.weatherapi.com/">weatherAPI.com</a>. Para realizar la búsqueda es necesaria una clave (API key), que se obtiene registrándose en la página mencionada.</p>
+        <form id="key-form">
+            <label for="key-input">Ingrese primero su clave: </label>
+            <input type="text" id="key-input" placeholder="API Key...">
+            <input class="submit" type="submit" value="Confirmar">
+        </form>
+        <form autocomplete="off" id="location-form" class="hide">
+            <input type="text" id="location-input" placeholder="Localidad a buscar...">
+            <input class="submit" type="submit" id="submit-btn" value="Conocer el clima">
+        </form>
+        <div class="error-container hide" id="error-container"></div>
+        <section class="cards-container" id="card-container">
+        </section>
+    </main>
+<script type="module" src="./js/index.js"></script>
+</body>
+</html>
